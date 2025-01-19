@@ -35,7 +35,7 @@ model Category {
   name      String
   icon      String     // Emoji ou um código representando o ícone
   createdAt DateTime   @default(now())
-  locations Location[] // Relacionamento 1:N com Locais
+  locations Store[] // Relacionamento 1:N com Locais
 }
 
 model Store {

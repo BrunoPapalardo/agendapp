@@ -29,3 +29,21 @@ model Appointment {
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
 }
+
+model Category {
+  id        Int        @id @default(autoincrement())
+  name      String
+  icon      String     // Emoji ou um código representando o ícone
+  createdAt DateTime   @default(now())
+  locations Location[] // Relacionamento 1:N com Locais
+}
+
+model Store {
+  id          Int      @id @default(autoincrement())
+  name        String
+  address     String
+  categoryId  Int
+  createdAt   DateTime @default(now())
+
+  category    Category @relation(fields: [categoryId], references: [id]) // Relacionamento com Category
+}

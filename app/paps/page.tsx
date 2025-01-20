@@ -1,5 +1,5 @@
 'use client';
-import Header from "@/components/Header/Header";
+import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
 
 const categories = [
   { id: 1, name: "Barbeiro", icon: "💈" },
@@ -14,10 +14,10 @@ const Paps = () => {
   
   return (
     <div>
-      <Header>
+      <CategoryFilter
         categories={categories}
         onSelectCategory={handleCategorySelect}
-      </Header>
+      />
       <h1>Paps</h1>
     </div>
   );

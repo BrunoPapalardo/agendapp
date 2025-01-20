@@ -12,7 +12,7 @@ interface Props {
   onSelectCategory: (id: number) => void;
 }
 
-const Header: React.FC<Props> = ({ categories, onSelectCategory }) => {
+const CategoryFilter: React.FC<Props> = ({ categories, onSelectCategory }) => {
   return (
     <div className={styles.container}>
       {categories.map((category) => (
@@ -29,16 +29,4 @@ const Header: React.FC<Props> = ({ categories, onSelectCategory }) => {
   );
 };
 
-export default Header;
-
-// 'use client';
-
-// const Header = () => {
-//   return (
-//     <div>
-//       <h1>HEADER</h1>
-//     </div>
-//   );
-// };
-
-// export default Header;
+export default CategoryFilter;

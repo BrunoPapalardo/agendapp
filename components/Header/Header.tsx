@@ -30,7 +30,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>Olá, pessoa!</div>
+      <div className={styles.logo}>Oi, bocó!</div>
       <div className={styles.actions}>
         <button className={styles.searchButton} aria-label="Pesquisar">
           🔍

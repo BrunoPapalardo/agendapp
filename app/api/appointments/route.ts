@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '@/lib/prisma'; // Prisma Client
 
 // Função para listar os agendamentos (GET)
 export async function GET() {

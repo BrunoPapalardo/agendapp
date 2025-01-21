@@ -32,15 +32,15 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <div className={styles.logo}>Olá, pessoa!</div>
       <div className={styles.actions}>
+        <button className={styles.searchButton} aria-label="Pesquisar">
+          🔍
+        </button>
         <button
           onClick={toggleMenu}
           className={styles.menuButton}
           aria-label="Menu do usuário"
         >
           👤
-        </button>
-        <button className={styles.searchButton} aria-label="Pesquisar">
-          🔍
         </button>
       </div>
       {menuOpen && (
@@ -60,7 +60,7 @@ const Header: React.FC = () => {
             </button>
             <ul>
               <li>Perfil</li>
-              <li>Bocó sz</li>
+              <li>Meus Favoritos</li>
               <li>Configurações</li>
               <li>Sair</li>
             </ul>

@@ -1,8 +1,9 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import Header from "@/components/Header/Header";
 import Store from "@/components/Store/Store";
+import styles from "./Home.module.css";
 
 interface Category {
   id: number;
@@ -26,46 +27,61 @@ const App = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
-    // Buscando as categorias
-    fetch('/api/categories')
-      .then((response) => response.json())
-      .then((data) => setCategories(data));
+    // Dados fictícios
+    const mockCategories: Category[] = [
+      { id: 1, name: 'Barbeiro', icon: '💈', locations: [] },
+      { id: 2, name: 'Médico', icon: '🩺', locations: [] },
+      { id: 3, name: 'Manicure', icon: '💅', locations: [] },
+      { id: 4, name: 'Restaurante', icon: '🍴', locations: [] },
+      { id: 5, name: 'Cabelereiro', icon: '✂️', locations: [] },
+      { id: 6, name: 'Academia', icon: '🏋️', locations: [] },
+    ];
 
-    // Buscando os locais
-    fetch('/api/stores')
-      .then((response) => response.json())
-      .then((data) => setLocations(data));
+    const mockLocations: Location[] = [
+      { id: 1, name: 'Barbearia do João', address: 'Rua A, 123', category: { name: 'Barbeiro' } },
+      { id: 2, name: 'Clínica Saúde Total', address: 'Av. B, 456', category: { name: 'Médico' } },
+      { id: 3, name: 'Nail Spa', address: 'Praça C, 789', category: { name: 'Manicure' } },
+      { id: 4, name: 'Casa do Nenê', address: 'Praça C, 789', category: { name: 'Barbeiro' } },
+      { id: 5, name: 'Nail Spa do Centro', address: 'Praça C, 789', category: { name: 'Manicure' } },
+      { id: 6, name: 'Nail Spa da pqp', address: 'Praça C, 789', category: { name: 'Manicure' } },
+    ];
+
+    mockCategories.forEach((category) => {
+      category.locations = mockLocations.filter(
+        (location) => location.category.name === category.name
+      );
+    });
+
+    setCategories(mockCategories);
+    setLocations(mockLocations);
   }, []);
 
-  // Filtrar os locais com base na categoria selecionada
   const filteredLocations = selectedCategory
     ? locations.filter((location) => location.category.name === selectedCategory)
     : locations;
 
+  const handleCategoryClick = (categoryName: string) => {
+    setSelectedCategory((prev) => (prev === categoryName ? null : categoryName));
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col p-4">
-      {/* Header */}
+    <div className={styles.container}>
       <Header />
 
-      {/* Filtro de Categorias */}
-      <div className="flex overflow-x-auto space-x-4 mb-6">
+      <div className={styles.categoryFilter}>
         {categories.map((category) => (
           <button
             key={category.id}
-            onClick={() => setSelectedCategory(category.name)}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-full border-2 transition-all ${selectedCategory === category.name
-                ? 'bg-blue-500 text-white'
-                : 'bg-white text-gray-700'
-              }`}
+            onClick={() => handleCategoryClick(category.name)}
+            className={`${styles.categoryButton} ${selectedCategory === category.name ? styles.selected : ''}`}
           >
-            <span className="text-xl">{category.icon}</span>
-            <span>{category.name}</span>
+            <span className={styles.categoryIcon}>{category.icon}</span>
+            <span className={styles.categoryName}>{category.name}</span>
           </button>
         ))}
       </div>
 
-      {/* Listagem de Locais */}
-      <div className="space-y-4">
+      <div className={styles.locationList}>
         {filteredLocations.length > 0 ? (
           filteredLocations.map((location) => (
             <Store
@@ -76,7 +92,7 @@ const App = () => {
             />
           ))
         ) : (
-          <p className="text-center text-gray-500">Nenhum local encontrado.</p>
+          <p className={styles.noLocations}>Nenhum local encontrado.</p>
         )}
       </div>
     </div>

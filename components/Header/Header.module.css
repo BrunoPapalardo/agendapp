@@ -1,5 +1,58 @@
-/* Transições gerais */
-.overlay {
+/* Header Container */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background-color: var(--foreground);
+    color: #fff;
+    font-family: "Arial", sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Alterado de "sticky" para "fixed" */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+  
+  /* Logo */
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  
+  /* Actions */
+  .actions {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .menuButton,
+  .searchButton {
+    background: #fff;
+    color: #2563eb;
+    border: none;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .menuButton:hover,
+  .searchButton:hover {
+    background-color: #e0e7ff;
+    transform: scale(1.1);
+  }
+  
+  /* Overlay */
+  .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -13,6 +66,7 @@
     transition: opacity 0.3s ease;
   }
   
+  /* Slide Menu */
   .slideMenu {
     width: 80%;
     max-width: 300px;
@@ -25,7 +79,6 @@
     position: relative;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     transform: translateX(100%);
-    animation: slideIn 0.3s forwards;
   }
   
   .opening {
@@ -36,7 +89,6 @@
     animation: slideOut 0.3s forwards;
   }
   
-  /* Animações para abrir e fechar */
   @keyframes slideIn {
     from {
       transform: translateX(100%);
@@ -55,6 +107,7 @@
     }
   }
   
+  /* Close Button */
   .closeButton {
     background: none;
     border: none;
@@ -65,6 +118,7 @@
     cursor: pointer;
   }
   
+  /* Menu Items */
   .slideMenu ul {
     list-style: none;
     padding: 0;
@@ -74,6 +128,8 @@
   .slideMenu li {
     padding: 12px 10px;
     cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
     transition: background-color 0.2s ease;
   }
   

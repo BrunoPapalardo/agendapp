@@ -1,0 +1,83 @@
+/* Transições gerais */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .slideMenu {
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transform: translateX(100%);
+    animation: slideIn 0.3s forwards;
+  }
+  
+  .opening {
+    animation: slideIn 0.3s forwards;
+  }
+  
+  .closing {
+    animation: slideOut 0.3s forwards;
+  }
+  
+  /* Animações para abrir e fechar */
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  
+  .closeButton {
+    background: none;
+    border: none;
+    font-size: 24px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .slideMenu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+  }
+  
+  .slideMenu li {
+    padding: 12px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .slideMenu li:hover {
+    background-color: #f0f0f0;
+  }
+  

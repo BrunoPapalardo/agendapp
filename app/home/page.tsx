@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import Header from "@/components/Header/Header";
+import Store from "@/components/Store/Store";
 
 interface Category {
   id: number;
@@ -42,17 +44,19 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col p-4">
+      {/* Header */}
+      <Header />
+
       {/* Filtro de Categorias */}
       <div className="flex overflow-x-auto space-x-4 mb-6">
         {categories.map((category) => (
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.name)}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-full border-2 transition-all ${
-              selectedCategory === category.name
+            className={`flex items-center space-x-2 px-4 py-2 rounded-full border-2 transition-all ${selectedCategory === category.name
                 ? 'bg-blue-500 text-white'
                 : 'bg-white text-gray-700'
-            }`}
+              }`}
           >
             <span className="text-xl">{category.icon}</span>
             <span>{category.name}</span>
@@ -64,13 +68,12 @@ const App = () => {
       <div className="space-y-4">
         {filteredLocations.length > 0 ? (
           filteredLocations.map((location) => (
-            <div
+            <Store
               key={location.id}
-              className="p-4 bg-white rounded-lg shadow-lg border"
-            >
-              <h2 className="text-lg font-semibold">{location.name}</h2>
-              <p className="text-sm text-gray-500">{location.address}</p>
-            </div>
+              id={location.id}
+              name={location.name}
+              address={location.address}
+            />
           ))
         ) : (
           <p className="text-center text-gray-500">Nenhum local encontrado.</p>

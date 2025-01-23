@@ -8,13 +8,13 @@
   
   .categoryFilter {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     margin-bottom: 24px;
     overflow-x: auto;
     padding-bottom: 8px;
     scroll-snap-type: x mandatory;
-    -ms-overflow-style: none; /* Para IE e Edge */
-    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* IE e Edge */
+    scrollbar-width: none; /* Firefox */
   }
   
   .categoryFilter::-webkit-scrollbar {
@@ -22,8 +22,7 @@
   }
   
   .categoryButton {
-    flex: 0 0 calc(20% - 8px); /* Exibe 5 categorias e metade da última */
-    max-width: calc(20% - 8px);
+    flex: 0 0 auto;
     text-align: center;
     background-color: #fff;
     border: 2px solid #e0e0e0;
@@ -32,6 +31,21 @@
     transition: all 0.3s ease;
     scroll-snap-align: start;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100px; /* Valor padrão para evitar problemas */
+  }
+  
+  @media (min-width: 640px) {
+    .categoryButton {
+      max-width: 120px; /* Aumenta o espaço para textos maiores em telas médias */
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .categoryButton {
+      max-width: 150px; /* Espaço ainda maior em telas grandes */
+    }
   }
   
   .categoryButton.selected {
@@ -48,15 +62,8 @@
   
   .categoryName {
     font-size: 14px;
-  }
-  
-  .locationList {
-    margin-top: 16px;
-  }
-  
-  .noLocations {
-    text-align: center;
-    color: #999;
-    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   

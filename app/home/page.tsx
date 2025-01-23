@@ -19,6 +19,8 @@ interface Location {
   category: {
     name: string;
   };
+  image: string;
+  rating: number;
 }
 
 const App = () => {
@@ -38,12 +40,12 @@ const App = () => {
     ];
 
     const mockLocations: Location[] = [
-      { id: 1, name: 'Barbearia do João', address: 'Rua A, 123', category: { name: 'Barbeiro' } },
-      { id: 2, name: 'Clínica Saúde Total', address: 'Av. B, 456', category: { name: 'Médico' } },
-      { id: 3, name: 'Nail Spa', address: 'Praça C, 789', category: { name: 'Manicure' } },
-      { id: 4, name: 'Casa do Nenê', address: 'Praça C, 789', category: { name: 'Barbeiro' } },
-      { id: 5, name: 'Nail Spa do Centro', address: 'Praça C, 789', category: { name: 'Manicure' } },
-      { id: 6, name: 'Nail Spa da pqp', address: 'Praça C, 789', category: { name: 'Manicure' } },
+      { id: 1, name: 'Barbearia do João', address: 'Rua A, 123', category: { name: 'Barbeiro' }, rating: 4, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmofOKQsM7vnvn1OIR88eeCOGYtsQKMBEv4Q&s' },
+      { id: 2, name: 'Clínica Saúde Total', address: 'Av. B, 456', category: { name: 'Médico' }, rating: 5, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFN24Eyjtcni7ox8HbV_RhD2QN8UFP2nn7ig&s'},
+      { id: 3, name: 'Nail Spa', address: 'Praça C, 789', category: { name: 'Manicure' }, rating: 2, image: 'https://cptstatic.s3.amazonaws.com/imagens/enviadas/materias/materia8041/treinamento-manicure-artigos-cursos-cpt.jpg' },
+      { id: 4, name: 'Casa do Nenê', address: 'Praça C, 789', category: { name: 'Barbeiro'}, rating: 99, image: 'https://psicologafabiola.com.br/wp-content/uploads/2016/07/forma-de-amar-psicologa-fabiola.jpg' },
+      { id: 5, name: 'Nail Spa do Centro', address: 'Praça C, 789', category: { name: 'Manicure'}, rating: 3, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkRiiQ-9KlJsVB9qqsuajjRQZ2e7g-pMhaag&s' },
+      { id: 6, name: 'Nail Spa da pqp', address: 'Praça C, 789', category: { name: 'Manicure'}, rating: 0, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNyZBRteUmQEXO0Jl7BaxiE0PeYQV98u-mXg&s', },
     ];
 
     mockCategories.forEach((category) => {
@@ -89,6 +91,9 @@ const App = () => {
               id={location.id}
               name={location.name}
               address={location.address}
+              image={location.image}
+              rating={location.rating}
+              category={location.category.name}
             />
           ))
         ) : (

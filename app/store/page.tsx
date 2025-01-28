@@ -1,7 +1,8 @@
 'use client';
-import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
+// import CategoryFilter from "@/components/CategoryFilter/CategoryFilter";
 import Header from "@/components/Header/Header";
 import { useState } from "react";
+import Image from 'next/image';
 
 const Store = () => {
   const [showReviews, setShowReviews] = useState(false);
@@ -49,7 +50,7 @@ const Store = () => {
       <div className="container mx-auto p-4">
         {/* Informações da loja */}
         <div className="bg-white shadow-lg rounded-lg p-6 mb-6 flex flex-col items-center">
-          <img src={storeInfo.logo} alt="Logo da loja" className="w-32 h-32 object-contain mb-4" />
+          <Image src={storeInfo.logo} alt="Logo da loja" className="w-32 h-32 object-contain mb-4" />
           <h1 className="text-3xl font-semibold text-gray-800 mb-2">{storeInfo.name}</h1>
           <p className="text-lg text-gray-600 mb-2">{storeInfo.address}</p>
           <p className="text-lg text-gray-600 mb-4">{storeInfo.phone}</p>
@@ -89,7 +90,7 @@ const Store = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {products.map((product, index) => (
               <div key={index} className="bg-primary p-4 rounded-lg shadow-md">
-                <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-md mb-4" />
+                <Image src={product.image} alt={product.name} className="w-full h-48 object-cover rounded-md mb-4" />
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.name}</h3>
                 <p className="text-lg text-gray-600 mb-2">{product.description}</p>
                 <p className="text-lg font-semibold text-gray-900">{product.price}</p>

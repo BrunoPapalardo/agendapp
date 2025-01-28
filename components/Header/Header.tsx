@@ -29,7 +29,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className={styles.header}>
+    <header className="flex justify-between items-center px-6 py-4 bg-primary text-white font-sans shadow-md fixed top-0 left-0 w-full z-100">
       <div className={styles.logo}>Oi, bocó!</div>
       <div className={styles.actions}>
         <button className={styles.searchButton} aria-label="Pesquisar">

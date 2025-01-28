@@ -11,8 +11,16 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          light: "var(--primary-light)",
+        },
+        secondary: "var(--secondary)",
+        highlight: "var(--highlight)",
+        danger: "var(--danger)",
+        border: "var(--border)",
       },
-    },
+    }
   },
   plugins: [],
 } satisfies Config;

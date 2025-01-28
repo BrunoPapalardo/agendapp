@@ -24,7 +24,7 @@ const Store: React.FC<Props> = ({ name, address, image, rating, category }) => {
   };
 
   return (
-    <div className="flex items-center bg-white rounded-lg shadow-lg border p-4 gap-4 hover:shadow-xl transition-shadow">
+    <div className="flex bg-primary items-center rounded-xl shadow-lg border p-4 gap-4 hover:shadow-xl transition-shadow mb-4">
       {/* Imagem/logo da loja */}
       <div className="flex-shrink-0">
         <img

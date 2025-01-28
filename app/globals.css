@@ -3,20 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
+  --background: #28033d;
   --foreground: #c97f17;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    /* --background: #4e0614; */
     /* --foreground: #7E57C2; */
-    --foreground: #c97f17;
+    /* --foreground: #b30629;
+    --foreground-light: #f34343;    */
+    --background: #f7fafc; /* Azul muito claro para o fundo */
+    --foreground: #1a202c; /* Cinza escuro para texto */
+    --primary: #3182ce; /* Azul médio como cor principal */
+    --primary-light: #63b3ed; /* Azul mais claro para hover */
+    --secondary: #38a169; /* Verde menta para elementos de ação */
+    --highlight: #ecc94b; /* Amarelo suave para destaques */
+    --danger: #e53e3e; /* Vermelho para avisos ou erros */
+    --border: #e2e8f0; /* Cinza claro para bordas */
+
+    
   }
 }
 
 body {
   padding-top: 72px; /* Ajuste conforme a altura real do Header */
+  background: var(--background);
 }
 
 /* body { */

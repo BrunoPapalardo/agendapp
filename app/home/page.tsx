@@ -68,9 +68,13 @@ const App = () => {
 
   return (
     <div className={styles.container}>
+      <link rel="icon" type="image/png" href="/public/logo.png" />
+
       <Header />
 
-      <div className={styles.categoryFilter}>
+      {/* <div className={styles.categoryFilter}> */}
+      {/* <div className="flex gap-3 mb-6 overflow-x-auto pb-2 scroll-snap-x mandatory no-scrollbar"> */}
+      <div className={`${styles.categoryFilter} flex gap-3 mb-6`}>
         {categories.map((category) => (
           <button
             key={category.id}

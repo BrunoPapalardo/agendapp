@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
 import Link from 'next/link';
-import { Search, MapPin, Star, Scissors } from 'lucide-react';
+import { Search, MapPin, Star } from 'lucide-react';
 import { businesses, categories } from '../../public/data';
 import Header from '../../components/Header/Header';
 

@@ -26,7 +26,7 @@ model User {
 
 model Appointment {
   id          Int      @id @default(autoincrement())
-  dateTime    DateTime
+  dateTime    DateTime?
   userId      Int
   employeeId  Int
   businessId  Int

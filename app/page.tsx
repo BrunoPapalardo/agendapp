@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Scissors, Star, Calendar } from 'lucide-react';
 import Link from 'next/link';
 

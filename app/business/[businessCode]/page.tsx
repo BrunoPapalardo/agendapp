@@ -1,39 +1,70 @@
-"use client";
-
-import { prisma } from '@/lib/prisma'; // Prisma Client
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { MapPin, Star, Clock, Instagram, Phone, MessageCircle, Map } from "lucide-react";
 import Link from "next/link";
-import { businesses } from "../../../public/data";
 import SubHeader from '../../../components/SubHeader/SubHeader';
+interface Business {
+    code: string;
+    name: string;
+    image: string;
+    address: string;
+    rating: number;
+    services: Service[];
+}
 
-async function getCompany(code: string) {
-    const response = await fetch(`/api/companies/${code}`);
-    if (!response.ok) throw new Error("Company not found");
-    return response.json();
-  }
+interface Service {
+    id: string;
+    name: string;
+    duration: string;
+    price: number;
+    image: string;
+}
 
-function Business() {
+function BusinessPage() {
     const { businessCode } = useParams();
+    const [business, setBusiness] = useState<Business | null>(null); // Define o tipo 'Business'
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+        async function fetchBusiness() {
+            try {
+                const response = await fetch("/api/companies/search", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ code: businessCode }),
+                });
 
-    const business = businesses.find((b) => b.code === businessCode);
+                if (!response.ok) {
+                    throw new Error("Company not found");
+                }
 
-    getCompany("BarbeariadoJoao")
-  .then(console.log)
-  .catch(console.error);
-    // const business = await prisma.company.findUnique({
-    //     where: { code: businessCode },
-    // });
+                const data = await response.json();
+                setBusiness(data);
+            } catch (error) {
+                setError('error.message');
+            } finally {
+                setLoading(false);
+            }
+        }
 
-    // console.log(business);
-    console.log('business');
+        if (businessCode) {
+            fetchBusiness();
+        }
+    }, [businessCode]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
 
     if (!business) {
-        return <div>Estabelecimento não encontrado {businessCode} </div>;
+        return <div>Estabelecimento não encontrado {businessCode}</div>;
     }
 
     return (

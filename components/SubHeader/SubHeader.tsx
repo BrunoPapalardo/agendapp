@@ -1,10 +1,7 @@
 'use client';
 
-import React, { useState } from "react";
-import Link from 'next/link';
 import { Undo2, Share2 } from 'lucide-react';
-// import { Link } from 'react-router-dom';
-import './Header.module.css';  // Ajuste o caminho conforme necessário
+import './Header.module.css';
 
 
 function SubHeader() {

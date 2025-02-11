@@ -2,10 +2,8 @@
 
 import React, { useState } from "react";
 import Link from 'next/link';
-import { Scissors, Calendar, User, UserPlus } from 'lucide-react';
-// import { Link } from 'react-router-dom';
+import { Calendar, User } from 'lucide-react';
 import './Header.module.css';  // Ajuste o caminho conforme necessário
-
 
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);

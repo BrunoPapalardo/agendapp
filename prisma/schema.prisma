@@ -29,12 +29,12 @@ model Appointment {
   dateTime    DateTime?
   userId      Int
   employeeId  Int
-  businessId  Int
+  companyId  Int
   productId   Int
 
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   employee    Employee @relation(fields: [employeeId], references: [id], onDelete: SetNull)
-  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  company    Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   product     Product  @relation(fields: [productId], references: [id], onDelete: SetNull)
 }
 
@@ -44,12 +44,13 @@ model Category {
   icon      String
   createdAt DateTime   @default(now())
 
-  businesses Business[]
+  companyes Company[]
 }
 
-model Business {
+model Company {
   id          Int       @id @default(autoincrement())
   name        String
+  code        String    @unique
   address     String
   categoryId  Int
   createdAt   DateTime  @default(now())
@@ -63,17 +64,17 @@ model Business {
 model Employee {
   id         Int       @id @default(autoincrement())
   name       String
-  businessId Int
+  companyId Int
 
-  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   appointments Appointment[]
 }
 
 model Product {
   id          Int       @id @default(autoincrement())
   name        String
-  businessId  Int
+  companyId  Int
 
-  business    Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  company    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   appointments Appointment[]
 }

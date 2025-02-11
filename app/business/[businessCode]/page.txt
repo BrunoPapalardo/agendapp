@@ -1,18 +1,11 @@
 "use client";
 
-import { prisma } from '@/lib/prisma'; // Prisma Client
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import { MapPin, Star, Clock, Instagram, Phone, MessageCircle, Map } from "lucide-react";
 import Link from "next/link";
 import { businesses } from "../../../public/data";
 import SubHeader from '../../../components/SubHeader/SubHeader';
-
-async function getCompany(code: string) {
-    const response = await fetch(`/api/companies/${code}`);
-    if (!response.ok) throw new Error("Company not found");
-    return response.json();
-  }
 
 function Business() {
     const { businessCode } = useParams();
@@ -21,16 +14,6 @@ function Business() {
     }, []);
 
     const business = businesses.find((b) => b.code === businessCode);
-
-    getCompany("BarbeariadoJoao")
-  .then(console.log)
-  .catch(console.error);
-    // const business = await prisma.company.findUnique({
-    //     where: { code: businessCode },
-    // });
-
-    // console.log(business);
-    console.log('business');
 
     if (!business) {
         return <div>Estabelecimento não encontrado {businessCode} </div>;

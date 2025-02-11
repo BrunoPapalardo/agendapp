@@ -15,29 +15,29 @@ async function main() {
   });
 
   // Criando negócios
-  const businesses = await prisma.business.createMany({
+  const companyes = await prisma.company.createMany({
     data: [
-      { name: "Barbearia do João", address: "Rua das Barbas, 123", categoryId: 1 },
-      { name: "Salão da Maria", address: "Avenida dos Cabelos, 456", categoryId: 2 },
-      { name: "Clínica Bella", address: "Praça da Estética, 789", categoryId: 3 },
+      { name: "Barbearia do João", code: "BarbeariadoJoao", address: "Rua das Barbas, 123", categoryId: 1 },
+      { name: "Salão da Maria", code: "SalaodaMaria", address: "Avenida dos Cabelos, 456", categoryId: 2 },
+      { name: "Clínica Bella", code: "ClinicaBella", address: "Praça da Estética, 789", categoryId: 3 },
     ],
   });
 
   // Criando funcionários
   const employees = await prisma.employee.createMany({
     data: [
-      { name: "Carlos Cabeludo", businessId: 1 },
-      { name: "Ana Tranças", businessId: 2 },
-      { name: "Beatriz Estética", businessId: 3 },
+      { name: "Carlos Cabeludo", companyId: 1 },
+      { name: "Ana Tranças", companyId: 2 },
+      { name: "Beatriz Estética", companyId: 3 },
     ],
   });
 
   // Criando produtos/serviços
   const products = await prisma.product.createMany({
     data: [
-      { name: "Corte Simples", businessId: 1 },
-      { name: "Pintura de Cabelo", businessId: 2 },
-      { name: "Limpeza de Pele", businessId: 3 },
+      { name: "Corte Simples", companyId: 1 },
+      { name: "Pintura de Cabelo", companyId: 2 },
+      { name: "Limpeza de Pele", companyId: 3 },
     ],
   });
 
@@ -53,9 +53,9 @@ async function main() {
   // Criando agendamentos
   await prisma.appointment.createMany({
     data: [
-      { dateTime: new Date(), userId: 1, employeeId: 1, businessId: 1, productId: 1 },
-      { dateTime: new Date(), userId: 2, employeeId: 2, businessId: 2, productId: 2 },
-      { dateTime: new Date(), userId: 3, employeeId: 3, businessId: 3, productId: 3 },
+      { dateTime: new Date(), userId: 1, employeeId: 1, companyId: 1, productId: 1 },
+      { dateTime: new Date(), userId: 2, employeeId: 2, companyId: 2, productId: 2 },
+      { dateTime: new Date(), userId: 3, employeeId: 3, companyId: 3, productId: 3 },
     ],
   });
 

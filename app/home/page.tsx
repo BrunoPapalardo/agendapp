@@ -1,111 +1,101 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Header from "@/components/Header/Header";
-import Store from "@/components/Store/Store";
-import styles from "./Home.module.css";
+import React, { useState } from 'react';
+// import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import { Search, MapPin, Star, Scissors } from 'lucide-react';
+import { businesses, categories } from '../../public/data';
+import Header from '../../components/Header/Header';
 
-interface Category {
-  id: number;
-  name: string;
-  icon: string;
-  locations: Location[];
-}
+function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-interface Location {
-  id: number;
-  name: string;
-  address: string;
-  category: {
-    name: string;
-  };
-  image: string;
-  rating: number;
-}
-
-const App = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [locations, setLocations] = useState<Location[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Dados fictícios
-    const mockCategories: Category[] = [
-      { id: 1, name: 'Barbeiro', icon: '💈', locations: [] },
-      { id: 2, name: 'Médico', icon: '🩺', locations: [] },
-      { id: 3, name: 'Manicure', icon: '💅', locations: [] },
-      { id: 4, name: 'Restaurante', icon: '🍴', locations: [] },
-      { id: 5, name: 'Cabelereiro', icon: '✂️', locations: [] },
-      { id: 6, name: 'Academia', icon: '🏋️', locations: [] },
-    ];
-
-    const mockLocations: Location[] = [
-      { id: 1, name: 'Barbearia do João', address: 'Rua A, 123', category: { name: 'Barbeiro' }, rating: 4, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmofOKQsM7vnvn1OIR88eeCOGYtsQKMBEv4Q&s' },
-      { id: 2, name: 'Clínica Saúde Total', address: 'Av. B, 456', category: { name: 'Médico' }, rating: 5, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFN24Eyjtcni7ox8HbV_RhD2QN8UFP2nn7ig&s'},
-      { id: 3, name: 'Nail Spa', address: 'Praça C, 789', category: { name: 'Manicure' }, rating: 2, image: 'https://cptstatic.s3.amazonaws.com/imagens/enviadas/materias/materia8041/treinamento-manicure-artigos-cursos-cpt.jpg' },
-      { id: 4, name: 'Casa do Nenê', address: 'Praça C, 789', category: { name: 'Barbeiro'}, rating: 99, image: 'https://psicologafabiola.com.br/wp-content/uploads/2016/07/forma-de-amar-psicologa-fabiola.jpg' },
-      { id: 5, name: 'Nail Spa do Centro', address: 'Praça C, 789', category: { name: 'Manicure'}, rating: 3, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkRiiQ-9KlJsVB9qqsuajjRQZ2e7g-pMhaag&s' },
-      { id: 6, name: 'Nail Spa da pqp', address: 'Praça C, 789', category: { name: 'Manicure'}, rating: 0, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNyZBRteUmQEXO0Jl7BaxiE0PeYQV98u-mXg&s', },
-    ];
-
-    mockCategories.forEach((category) => {
-      category.locations = mockLocations.filter(
-        (location) => location.category.name === category.name
-      );
-    });
-
-    setCategories(mockCategories);
-    setLocations(mockLocations);
-  }, []);
-
-  const filteredLocations = selectedCategory
-    ? locations.filter((location) => location.category.name === selectedCategory)
-    : locations;
-
-  const handleCategoryClick = (categoryName: string) => {
-    setSelectedCategory((prev) => (prev === categoryName ? null : categoryName));
-  };
+  const filteredBusinesses = businesses.filter(business => {
+    const matchesCategory = selectedCategory ? business.category === selectedCategory : true;
+    const matchesSearch = business.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <div className={styles.container}>
-      <link rel="icon" type="image/png" href="/public/logo.png" />
-
+    <div className="min-h-screen bg-gray-50 pt-10">
       <Header />
-
-      {/* <div className={styles.categoryFilter}> */}
-      {/* <div className="flex gap-3 mb-6 overflow-x-auto pb-2 scroll-snap-x mandatory no-scrollbar"> */}
-      <div className={`${styles.categoryFilter} flex gap-3 mb-6`}>
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            onClick={() => handleCategoryClick(category.name)}
-            className={`${styles.categoryButton} ${selectedCategory === category.name ? styles.selected : ''}`}
-          >
-            <span className={styles.categoryIcon}>{category.icon}</span>
-            <span className={styles.categoryName}>{category.name}</span>
-          </button>
-        ))}
-      </div>
-
-      <div className={styles.locationList}>
-        {filteredLocations.length > 0 ? (
-          filteredLocations.map((location) => (
-            <Store
-              key={location.id}
-              id={location.id}
-              name={location.name}
-              address={location.address}
-              image={location.image}
-              rating={location.rating}
-              category={location.category.name}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Search and Filter Section */}
+        <div className="mb-8 space-y-4">
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400" />
+            </div>
+            <input
+              type="text"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+              placeholder="Buscar estabelecimentos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-          ))
-        ) : (
-          <p className={styles.noLocations}>Nenhum local encontrado.</p>
-        )}
+          </div>
+
+          <div className="flex space-x-2 overflow-x-auto pb-2">
+            <button
+              onClick={() => setSelectedCategory('')}
+              className={`px-4 py-2 rounded-full text-sm font-medium ${
+                selectedCategory === ''
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              Todos
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.name)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap ${
+                  selectedCategory === category.name
+                    ? 'bg-purple-600 text-white'
+                    : 'bg-white text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Business List */}
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+          {filteredBusinesses.map((business) => (
+            <Link
+              key={business.id}
+              href={`/business/${business.code}`}
+              className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className="h-24 w-full relative rounded-t-lg overflow-hidden">
+                <img
+                  src={business.image}
+                  alt={business.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-md font-medium text-gray-900 overflow-hidden text-ellipsis">{business.name}</h3>
+                <p className="mt-1 text-sm text-gray-500">{business.category}</p>
+                <div className="mt-2 flex items-center text-sm text-gray-500">
+                  <MapPin className="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" />
+                  {business.address}
+                </div>
+                <div className="mt-2 flex items-center">
+                  <Star className="text-yellow-400 h-4 w-4" />
+                  <span className="ml-1 text-sm text-gray-600">{business.rating}</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
-};
+}
 
-export default App;
+export default Home;  // Alterado para exportação default

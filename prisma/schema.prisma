@@ -14,36 +14,66 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  telephone String
-  password  String
-  createdAt DateTime @default(now())
-  Appointments Appointment[]
+  id          Int        @id @default(autoincrement())
+  name        String
+  email       String     @unique
+  telephone   String
+  password    String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  appointments Appointment[]
 }
 
 model Appointment {
-  id        Int      @id @default(autoincrement())
-  dateTime  DateTime
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  id          Int      @id @default(autoincrement())
+  dateTime    DateTime
+  userId      Int
+  employeeId  Int
+  businessId  Int
+  productId   Int
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  employee    Employee @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: SetNull)
 }
 
 model Category {
   id        Int        @id @default(autoincrement())
   name      String
-  icon      String     // Emoji ou um código representando o ícone
+  icon      String
   createdAt DateTime   @default(now())
-  locations Store[] // Relacionamento 1:N com Locais
+
+  businesses Business[]
 }
 
-model Store {
-  id          Int      @id @default(autoincrement())
+model Business {
+  id          Int       @id @default(autoincrement())
   name        String
   address     String
   categoryId  Int
-  createdAt   DateTime @default(now())
+  createdAt   DateTime  @default(now())
 
-  category    Category @relation(fields: [categoryId], references: [id]) // Relacionamento com Category
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  employees   Employee[]
+  products    Product[]
+  appointments Appointment[]
+}
+
+model Employee {
+  id         Int       @id @default(autoincrement())
+  name       String
+  businessId Int
+
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  businessId  Int
+
+  business    Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
 }

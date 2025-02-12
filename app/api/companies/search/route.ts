@@ -13,7 +13,10 @@ export async function POST(request: NextRequest) {
 
     // Faça a consulta ao banco
     const company = await prisma.company.findUnique({
-      where: { code },
+      where: { code: code },
+      include: {
+        products: true, // Isso adiciona os produtos vinculados à empresa
+      },
     });
 
     if (!company) {

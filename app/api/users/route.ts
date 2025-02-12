@@ -6,23 +6,23 @@ export async function GET() {
 }
 
 // Criar um novo usuário (POST)
-export async function POST(req: Request) {
-  try {
-    const { name, email, telephone, password } = await req.json();
+// export async function POST(req: Request) {
+//   try {
+//     const { name, email, telephone, password } = await req.json();
 
-    // Criação do usuário no banco
-    const newUser = await prisma.user.create({
-      data: {
-        name,
-        email,
-        telephone, // Aqui está o campo 'telephone'
-        password,
-      },
-    });
+//     // Criação do usuário no banco
+//     const newUser = await prisma.user.create({
+//       data: {
+//         name,
+//         email,
+//         telephone, // Aqui está o campo 'telephone'
+//         password,
+//       },
+//     });
 
-    return new Response(JSON.stringify(newUser), { status: 201 });
-  } catch (error) {
-    console.error(error);
-    return new Response('Erro ao criar usuário', { status: 500 });
-  }
-}
+//     return new Response(JSON.stringify(newUser), { status: 201 });
+//   } catch (error) {
+//     console.error(error);
+//     return new Response('Erro ao criar usuário', { status: 500 });
+//   }
+// }

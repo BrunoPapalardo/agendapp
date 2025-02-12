@@ -1,8 +1,9 @@
 'use client';
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { MapPin, Star, Clock, Instagram, Phone, MessageCircle, Map } from "lucide-react";
+import { MapPin, Clock, Instagram, Phone, MessageCircle, Map } from "lucide-react";
 import Link from "next/link";
 import SubHeader from '../../../components/SubHeader/SubHeader';
 interface Business {
@@ -11,10 +12,10 @@ interface Business {
     image: string;
     address: string;
     rating: number;
-    services: Service[];
+    products: Products[];
 }
 
-interface Service {
+interface Products {
     id: string;
     name: string;
     duration: string;
@@ -46,7 +47,7 @@ function BusinessPage() {
                 const data = await response.json();
                 setBusiness(data);
             } catch (error) {
-                setError('error.message');
+                setError(error instanceof Error ? error.message : "Ocorreu um erro desconhecido");
             } finally {
                 setLoading(false);
             }
@@ -69,7 +70,7 @@ function BusinessPage() {
         return <div>Estabelecimento não encontrado {businessCode}</div>;
     }
 
-    console.log(business.services);
+    console.log(business);
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -79,7 +80,12 @@ function BusinessPage() {
                 {/* Business Header */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                     <div className="h-64 w-full relative">
-                        <img src={business.image} alt={business.name} className="w-full h-full object-cover" />
+                        <Image src={business.image} 
+                        alt={business.name} 
+                        className="w-full h-full object-cover" 
+                        width={300} 
+                        height={200}
+                        />
                     </div>
                     <div className="p-6">
                         <h1 className="text-3xl font-bold text-gray-900">{business.name}</h1>
@@ -87,10 +93,12 @@ function BusinessPage() {
                             <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
                             {business.address}
                         </div>
-                        <div className="mt-2 flex items-center">
+                        
+                        {/* Rating */}
+                        {/* <div className="mt-2 flex items-center">
                             <Star className="text-yellow-400 h-5 w-5" />
                             <span className="ml-1 text-sm text-gray-600">{business.rating}</span>
-                        </div>
+                        </div> */}
                         <div className="mt-2 flex space-x-2">
                             <a href={`https://www.instagram.com`} target="_blank">
                                 <Instagram className="h-5 w-5 text-purple-400" />
@@ -112,14 +120,16 @@ function BusinessPage() {
                 <div className="mt-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">Serviços disponíveis</h2>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {/* {business.services.map((service) => (
+                        {business.products.map((service) => (
                             <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
                                 <div className="flex items-center">
                                     <div className="h-24 w-24 rounded-t-lg overflow-hidden mr-4">
-                                        <img
+                                        <Image
                                             src={service.image}
                                             alt={service.name}
                                             className="w-full h-full rounded-full object-cover"
+                                            width={300} 
+                                            height={200}
                                         />
                                     </div>
                                     <div>
@@ -138,7 +148,7 @@ function BusinessPage() {
                                     </div>
                                 </div>
                             </div>
-                        ))} */}
+                        ))}
                     </div>
                 </div>
             </div>

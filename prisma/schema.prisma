@@ -21,6 +21,8 @@ model User {
   password    String
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  image       String
+
   appointments Appointment[]
 }
 
@@ -53,6 +55,7 @@ model Company {
   code        String    @unique
   address     String
   categoryId  Int
+  image       String
   createdAt   DateTime  @default(now())
 
   category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -62,18 +65,20 @@ model Company {
 }
 
 model Employee {
-  id         Int       @id @default(autoincrement())
-  name       String
-  companyId Int
+  id            Int       @id @default(autoincrement())
+  name          String
+  companyId     Int
+  image         String
 
-  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  appointments Appointment[]
+  company       Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  appointments  Appointment[]
 }
 
 model Product {
   id          Int       @id @default(autoincrement())
   name        String
-  companyId  Int
+  companyId   Int
+  image       String
 
   company    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
   appointments Appointment[]

@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { MapPin, Star, Clock, Instagram, Phone, MessageCircle, Map } from "lucide-react";
@@ -25,7 +27,7 @@ function BusinessPage() {
     const [business, setBusiness] = useState<Business | null>(null); // Define o tipo 'Business'
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    
     useEffect(() => {
         async function fetchBusiness() {
             try {
@@ -66,6 +68,8 @@ function BusinessPage() {
     if (!business) {
         return <div>Estabelecimento não encontrado {businessCode}</div>;
     }
+
+    console.log(business.services);
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -108,7 +112,7 @@ function BusinessPage() {
                 <div className="mt-8">
                     <h2 className="text-2xl font-bold text-gray-900 mb-6">Serviços disponíveis</h2>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {business.services.map((service) => (
+                        {/* {business.services.map((service) => (
                             <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
                                 <div className="flex items-center">
                                     <div className="h-24 w-24 rounded-t-lg overflow-hidden mr-4">
@@ -134,7 +138,7 @@ function BusinessPage() {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        ))} */}
                     </div>
                 </div>
             </div>
@@ -142,4 +146,4 @@ function BusinessPage() {
     );
 }
 
-export default Business;
+export default BusinessPage;

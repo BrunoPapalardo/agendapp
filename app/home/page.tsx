@@ -68,7 +68,7 @@ function Home() {
           {filteredBusinesses.map((business) => (
             <Link
               key={business.id}
-              href={`/business/${business.code}`}
+              href={`/${business.code}`}
               className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="h-24 w-full relative rounded-t-lg overflow-hidden">
@@ -99,4 +99,4 @@ function Home() {
   );
 }
 
-export default Home;  // Alterado para exportação default
+export default Home;

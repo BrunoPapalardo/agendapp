@@ -6,10 +6,11 @@ import { useParams, useRouter } from "next/navigation";
 
 import { MapPin, Clock, Instagram, Phone, MessageCircle, Map, AlertCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import SubHeader from '../../../components/SubHeader/SubHeader';
-import ErrorPage from '../../../components/ErrorPage/ErrorPage';
+import SubHeader from '@/components/SubHeader/SubHeader';
+import ErrorPage from '@/components/ErrorPage/ErrorPage';
 
 interface Business {
+    id: number;
     code: string;
     name: string;
     image: string;
@@ -197,7 +198,8 @@ function BusinessPage() {
                                         </div>
                                         <p className="mt-2 text-lg font-medium text-gray-900">R$ {service.price}</p>
                                         <Link
-                                            href={`/booking/${business.code}/${service.id}`}
+                                            // href={`/booking/${business.code}/${service.id}`}
+                                            href={`/${business.code}/${service.id}`}
                                             className="mt-4 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700"
                                         >
                                             Agendar

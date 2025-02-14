@@ -13,8 +13,8 @@ export const categories: Category[] = [
 export const businesses: Business[] = [
   {
     id: 1,
-    name: 'Salão Beleza Natural',
-    code: 'SalaoBelezaNatural',
+    name: 'Barbearia do Joao',
+    code: 'BarbeariaJoao',
     category: 'Cabeleireiro',
     rating: 4.8,
     image: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',

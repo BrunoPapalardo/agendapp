@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Search, MapPin, Star } from 'lucide-react';
 import { businesses, categories } from '../../public/data';
 import Header from '../../components/Header/Header';
+import Image from 'next/image';
 
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -71,7 +72,7 @@ function Home() {
               className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="h-24 w-full relative rounded-t-lg overflow-hidden">
-                <img
+                <Image
                   src={business.image}
                   alt={business.name}
                   className="w-full h-full object-cover"

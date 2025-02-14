@@ -1,4 +1,3 @@
-import Login from '@/components/Login/Login';
 import { Scissors, Star, Calendar } from 'lucide-react';
 import Link from 'next/link';
 

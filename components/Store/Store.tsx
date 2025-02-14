@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface Props {
@@ -27,7 +28,7 @@ const Store: React.FC<Props> = ({ name, address, image, rating, category }) => {
     <div className="flex bg-primary items-center rounded-xl shadow-lg border p-4 gap-4 hover:shadow-xl transition-shadow mb-4">
       {/* Imagem/logo da loja */}
       <div className="flex-shrink-0">
-        <img
+        <Image
           src={image}
           alt={`Logo da loja ${name}`}
           className="w-20 h-20 md:w-24 md:h-24 rounded-full border object-cover"

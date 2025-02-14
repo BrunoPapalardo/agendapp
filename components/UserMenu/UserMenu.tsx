@@ -1,4 +1,4 @@
-import { signOut, signIn } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import React, { useEffect } from "react";
 import Link from "next/link";
 

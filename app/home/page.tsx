@@ -75,6 +75,7 @@ function Home() {
                 <Image
                   src={business.image}
                   alt={business.name}
+                  fill
                   className="w-full h-full object-cover"
                 />
               </div>

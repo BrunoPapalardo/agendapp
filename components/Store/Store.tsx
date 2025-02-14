@@ -29,6 +29,7 @@ const Store: React.FC<Props> = ({ name, address, image, rating, category }) => {
       {/* Imagem/logo da loja */}
       <div className="flex-shrink-0">
         <Image
+          fill
           src={image}
           alt={`Logo da loja ${name}`}
           className="w-20 h-20 md:w-24 md:h-24 rounded-full border object-cover"

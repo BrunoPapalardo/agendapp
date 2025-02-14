@@ -15,7 +15,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/home" className="flex items-center space-x-2">
             <Calendar className="h-8 w-8 text-purple-600"/>
             <span className="text-xl font-bold text-gray-900">Agendou!</span>
           </Link>

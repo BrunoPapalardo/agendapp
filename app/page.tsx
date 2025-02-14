@@ -27,7 +27,7 @@ export default function Home() {
               </div>
               <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
                 <Link
-                  href="/test"
+                  href="/login"
                   className="inline-flex items-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-purple-950 hover:bg-purple-900"
                 >
                   Tenho um estabelecimento

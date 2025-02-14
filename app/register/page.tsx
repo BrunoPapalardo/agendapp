@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
+import Header from '../../components/Header/Header';
 
 const Register = () => {
   const router = useRouter();
@@ -77,6 +78,7 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+      <Header/>
       <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
         <h2 className="text-3xl font-bold text-gray-900 text-center">Crie sua conta</h2>
         <p className="text-gray-600 text-center mt-2">Preencha os campos abaixo:</p>

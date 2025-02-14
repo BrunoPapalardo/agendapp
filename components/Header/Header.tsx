@@ -1,5 +1,6 @@
 'use client';
 
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import Link from 'next/link';
 import { Calendar, User } from 'lucide-react';
@@ -8,6 +9,9 @@ import './Header.module.css';  // Ajuste o caminho conforme necessário
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
+
+  const { data: session, status } = useSession();
+
 
   const toggleMenu = () => {
     if (menuOpen) {
@@ -60,12 +64,14 @@ function Home() {
                   >
                     ✖
                   </button>
+                  {(status === "authenticated") && (
                   <ul className="slideMenu">
                     <li>Perfil</li>
                     <li>Meus Favoritos</li>
                     <li>Configurações</li>
                     <li>Sair</li>
                   </ul>
+                  )}
                 </div>
               </div>
             )}

@@ -1,3 +1,4 @@
+import Login from '@/components/Login/Login';
 import { Scissors, Star, Calendar } from 'lucide-react';
 import Link from 'next/link';
 
@@ -29,7 +30,7 @@ export default function Home() {
                   href="/test"
                   className="inline-flex items-center px-2 py-1 border border-transparent text-base font-medium rounded-md text-white bg-purple-950 hover:bg-purple-900"
                 >
-                  Cadastrar estabelecimento
+                  Tenho um estabelecimento
                 </Link>
               </div>
             </div>

@@ -1,13 +1,17 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-
-import { MapPin, Clock, Instagram, Phone, MessageCircle, Map, AlertCircle, ArrowLeft } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { MapPin, Clock, Instagram, Phone, MessageCircle, Map, AlertCircle, ArrowLeft, SquarePen } from "lucide-react";
 import Link from "next/link";
 import SubHeader from '@/components/SubHeader/SubHeader';
 import ErrorPage from '@/components/ErrorPage/ErrorPage';
+import AgendaJaButton from '@/components/AgendaJa/AgendaJa';
+import NewProduct from '@/components/NewProduct/NewProduct';
+import MainModal from '@/components/MainModal/MainModal';
+
 
 interface Business {
     id: number;
@@ -16,10 +20,10 @@ interface Business {
     image: string;
     address: string;
     rating: number;
-    products: Products[];
+    services: Services[];
 }
 
-interface Products {
+interface Services {
     id: string;
     name: string;
     duration: string;
@@ -32,7 +36,7 @@ function ErrorMessage({ message }: { message: string }) {
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
-            <SubHeader/>
+            <SubHeader />
             <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
             <h1 className="text-2xl font-bold text-gray-900">{message}</h1>
             <button
@@ -96,6 +100,7 @@ function BusinessLoading() {
 }
 
 function BusinessPage() {
+    const { data: session } = useSession();
     const { businessCode } = useParams();
     const [business, setBusiness] = useState<Business | null>(null);
     const [loading, setLoading] = useState(true);
@@ -130,6 +135,11 @@ function BusinessPage() {
         }
     }, [businessCode]);
 
+    let isAdmin = false;
+    if (session) {
+        isAdmin = session?.user?.companyRoles?.some(role => role.companyId === business?.id) || false;
+    }
+
     if (loading) {
         return <BusinessLoading />;
     }
@@ -144,20 +154,40 @@ function BusinessPage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                     <div className="h-64 w-full relative">
-                        <Image 
-                            src={business.image} 
-                            alt={business.name} 
-                            className="w-full h-full object-cover" 
-                            width={300} 
-                            height={200} 
+                        <Image
+                            src={business.image}
+                            alt={business.name}
+                            className="w-full h-full object-cover"
+                            width={300}
+                            height={200}
                         />
+                        {isAdmin && (
+                            <div className="absolute top-2 right-2 p-2 bg-white bg-opacity-50 rounded-full cursor-pointer">
+                                <SquarePen />
+                            </div>
+                        )}
                     </div>
                     <div className="p-6">
-                        <h1 className="text-3xl font-bold text-gray-900">{business.name}</h1>
-                        <div className="mt-2 flex items-center text-sm text-gray-500">
-                            <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
-                            {business.address}
+
+                        <div className="mt-2 flex items-center space-x-2">
+                            <h1 className="text-3xl font-bold text-gray-900">{business.name}</h1>
+                            {isAdmin && (
+                                <div className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400">
+                                    <SquarePen />
+                                </div>
+                            )}
                         </div>
+
+                        <div className="mt-2 flex items-center space-x-3 text-sm text-gray-500">
+                            <div className="flex items-center">
+                                <MapPin className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" />
+                                <span>{business.address}</span>
+                            </div>
+                            {isAdmin && (
+                                <SquarePen className="flex-shrink-0 h-5 w-5 text-gray-400 cursor-pointer" />
+                            )}
+                        </div>
+
                         <div className="mt-2 flex space-x-2">
                             <a href={`https://www.instagram.com`} target="_blank">
                                 <Instagram className="h-5 w-5 text-purple-400" />
@@ -176,9 +206,14 @@ function BusinessPage() {
                 </div>
 
                 <div className="mt-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Serviços disponíveis</h2>
+                    <div className="mt-2 flex items-center space-x-2">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-0">Serviços disponíveis</h2>
+                        {isAdmin && (
+                            <NewProduct />
+                        )}
+                    </div>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        {business.products.map((service) => (
+                        {business.services.map((service) => (
                             <div key={service.id} className="bg-white rounded-lg shadow-sm p-6">
                                 <div className="flex items-center">
                                     <div className="h-24 w-24 rounded-t-lg overflow-hidden mr-4">
@@ -186,7 +221,7 @@ function BusinessPage() {
                                             src={service.image}
                                             alt={service.name}
                                             className="w-full h-full rounded-full object-cover"
-                                            width={300} 
+                                            width={300}
                                             height={200}
                                         />
                                     </div>
@@ -197,13 +232,22 @@ function BusinessPage() {
                                             {service.duration}
                                         </div>
                                         <p className="mt-2 text-lg font-medium text-gray-900">R$ {service.price}</p>
-                                        <Link
-                                            // href={`/booking/${business.code}/${service.id}`}
-                                            href={`/${business.code}/${service.id}`}
-                                            className="mt-4 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700"
-                                        >
-                                            Agendar
-                                        </Link>
+
+                                        {isAdmin ? (
+                                            <Link
+                                                href={`/${business.code}/${service.id}`}
+                                                className="mt-4 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700"
+                                            >
+                                                Editar
+                                            </Link>
+                                        ) : (
+                                            <Link
+                                                href={`/${business.code}/${service.id}`}
+                                                className="mt-4 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700"
+                                            >
+                                                Agendar
+                                            </Link>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -211,6 +255,10 @@ function BusinessPage() {
                     </div>
                 </div>
             </div>
+            {/* {isAdmin && (
+                <NewProduct />
+                // <AgendaJaButton />
+            )} */}
         </div>
     );
 }

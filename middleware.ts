@@ -8,5 +8,5 @@ export default withAuth({
 });
 
 export const config = {
-  matcher: ['/paps', '/profile'],
+  matcher: ['/papss', '/profile', '/register/company'],
 };

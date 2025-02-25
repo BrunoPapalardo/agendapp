@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "serviceId is required" }, { status: 400 });
     }
 
-    const service = await prisma.product.findUnique({
+    const service = await prisma.service.findUnique({
       where: { id: Number(serviceId) },
     });
 

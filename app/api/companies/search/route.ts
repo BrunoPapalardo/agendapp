@@ -15,10 +15,10 @@ export async function POST(request: NextRequest) {
     const company = await prisma.company.findUnique({
       where: { code: code },
       include: {
-        products: true, // Isso adiciona os produtos vinculados à empresa
+        services: true, // Isso adiciona os produtos vinculados à empresa
       },
     });
-
+    
     if (!company) {
       return NextResponse.json({ error: "Company not found" }, { status: 404 });
     }

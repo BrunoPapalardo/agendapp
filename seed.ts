@@ -39,13 +39,13 @@ async function main() {
   });
 
   // Criando produtos/serviços
-  await prisma.product.createMany({
+  await prisma.service.createMany({
     data: [
-      { name: "Corte Simples", companyId: 1, image: "https://belezamoderna.com.br/wp-content/uploads/2023/08/Corte-de-cabelo-em-camadas-1.jpeg" },
-      { name: "Pintura de Cabelo", companyId: 2, image: "https://prohall.com.br/wp-content/uploads/2022/11/hair-stylist-dyes-hair-with-a-brush-with-foil-2021-09-04-02-26-57-utc-1.jpg" },
-      { name: "Limpeza de Pele", companyId: 3, image: "https://media.buddhaspa.com.br/uploads/2019/05/Limpeza-de-pele.jpg" },
-      { name: "Massagem Relaxante", companyId: 4, image: "https://trovoterapias.com.br/wp-content/uploads/2023/07/Massagem-Relaxante.jpg" },
-      { name: "Terapia de Pedras Quentes", companyId: 5, image: "https://spasorocaba.com.br/wp-content/uploads/2018/04/Terapia-das-Pedras-Quente-2-e1522083509901.jpg" },
+      { name: "Corte Simples", companyId: 1, price: 80, duration: 30, image: "https://belezamoderna.com.br/wp-content/uploads/2023/08/Corte-de-cabelo-em-camadas-1.jpeg" },
+      { name: "Pintura de Cabelo", companyId: 2, price: 80, duration: 30, image: "https://prohall.com.br/wp-content/uploads/2022/11/hair-stylist-dyes-hair-with-a-brush-with-foil-2021-09-04-02-26-57-utc-1.jpg" },
+      { name: "Limpeza de Pele", companyId: 3, price: 80, duration: 30, image: "https://media.buddhaspa.com.br/uploads/2019/05/Limpeza-de-pele.jpg" },
+      { name: "Massagem Relaxante", companyId: 4, price: 80, duration: 30, image: "https://trovoterapias.com.br/wp-content/uploads/2023/07/Massagem-Relaxante.jpg" },
+      { name: "Terapia de Pedras Quentes", companyId: 5, price: 80, duration: 30, image: "https://spasorocaba.com.br/wp-content/uploads/2018/04/Terapia-das-Pedras-Quente-2-e1522083509901.jpg" },
     ],
   });
 
@@ -67,7 +67,7 @@ async function main() {
       userId: (i % 5) + 1,
       employeeId: (i % 5) + 1,
       companyId: (i % 5) + 1,
-      productId: (i % 5) + 1,
+      serviceId: (i % 5) + 1,
     })),
   });
 

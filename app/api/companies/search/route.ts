@@ -15,7 +15,8 @@ export async function POST(request: NextRequest) {
     const company = await prisma.company.findUnique({
       where: { code: code },
       include: {
-        services: true, // Isso adiciona os produtos vinculados à empresa
+        services: true,
+        employees: true,
       },
     });
     

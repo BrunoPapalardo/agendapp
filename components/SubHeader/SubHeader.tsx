@@ -13,7 +13,7 @@ function SubHeader() {
     if (navigator.share) {
       navigator
         .share({
-          title: "Agendou!",
+          title: "Agendapp!",
           text: "Não agendou? Então agende online!",
           url: window.location.href,
         })

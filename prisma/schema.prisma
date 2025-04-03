@@ -1,3 +1,5 @@
+// prisma\schema.prisma
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -34,6 +36,8 @@ model Appointment {
   employeeId Int
   companyId  Int
   serviceId  Int       @default(0)
+  serviceDuration Int  @default(0)
+
 
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   employee Employee @relation(fields: [employeeId], references: [id], onDelete: SetNull)
@@ -75,24 +79,29 @@ model Company {
 }
 
 model Employee {
-  id        Int    @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   companyId Int
   image     String
-
-  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  appointments Appointment[]
+  
+  company       Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  services      Service[]       @relation("ServiceEmployees")
+  appointments  Appointment[]
+  businessHours BusinessHours[]
 }
 
 model Service {
-  id        Int    @id @default(autoincrement())
-  name      String
-  companyId Int
-  image     String
-  price     Float
-  duration  Int
-
-  company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  id           Int        @id @default(autoincrement())
+  name         String
+  companyId    Int
+  image        String
+  price        Float
+  duration     Int
+  prepareTime  Int        @default(0)
+  intervalTime Int        @default(0)
+  
+  company      Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employees    Employee[] @relation("ServiceEmployees")
   appointments Appointment[]
 }
 
@@ -109,11 +118,13 @@ model CompanyUserRole {
 }
 
 model BusinessHours {
-  id        Int     @id @default(autoincrement())
-  companyId Int
-  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  dayOfWeek Int // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
-  startTime String // Ex: "08:00"
-  endTime   String // Ex: "12:00"
-  isClosed  Boolean @default(false)
+  id         Int    @id @default(autoincrement())
+  companyId  Int
+  employeeId Int? // Se necessário para agendamentos específicos de funcionários
+  dayOfWeek  Int // 0 (Domingo) - 6 (Sábado)
+  startTime  String // "09:00"
+  endTime    String // "18:00"
+
+  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employee Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
 }

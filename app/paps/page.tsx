@@ -1,104 +1,48 @@
-"use client";
+"use client"
 
 import { useState } from "react";
-import Modal from "@/components/MainModal/MainModal";
 
-export default function ModalExample() {
-    const [isOpen, setIsOpen] = useState(false);
+export default function ServiceSearch({ serviceId }: { serviceId: string }) {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    return (
-        <div>
-            <button 
-                onClick={() => setIsOpen(true)} 
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-            >
-                Abrir Modal
-            </button>
+  const fetchService = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/services/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ serviceId }),
+      });
+      if (!response.ok) {
+        throw new Error("Erro ao buscar serviço");
+      }
+      const result = await response.json();
+      setData(result);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Meu Modal">
-                <p>Este é um modal reutilizável!!!!!!</p>
-            </Modal>
-        </div>
-    );
+  return (
+    <div className="p-4 border rounded-lg shadow-md max-w-md mx-auto bg-white">
+      <button
+        onClick={fetchService}
+        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+      >
+        Buscar Serviço
+      </button>
+      {loading && <p className="mt-2 text-gray-500">Carregando...</p>}
+      {error && <p className="mt-2 text-red-500">{error}</p>}
+      {data && (
+        <pre className="mt-2 p-2 bg-gray-100 rounded text-sm overflow-x-auto">
+          {JSON.stringify(data, null, 2)}
+        </pre>
+      )}
+    </div>
+  );
 }
-
-
-
-// "use client";
-// import { useState, useEffect } from "react";
-
-// const days = [
-//   "Domingo",
-//   "Segunda-feira",
-//   "Terça-feira",
-//   "Quarta-feira",
-//   "Quinta-feira",
-//   "Sexta-feira",
-//   "Sábado",
-// ];
-
-// export default function BusinessHours({ companyId }: { companyId: number }) {
-//   const [hours, setHours] = useState([]);
-
-//   useEffect(() => {
-//     fetch(`/api/business-hours?companyId=${companyId}`)
-//       .then((res) => res.json())
-//       .then(setHours);
-//   }, [companyId]);
-
-//   const handleAddPeriod = async (day: number) => {
-//     await fetch("/api/business-hours", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         companyId,
-//         dayOfWeek: day,
-//         startTime: "08:00",
-//         endTime: "12:00",
-//       }),
-//     });
-
-//     fetch(`/api/business-hours?companyId=${companyId}`)
-//       .then((res) => res.json())
-//       .then(setHours);
-//   };
-
-//   const handleDelete = async (id: number) => {
-//     await fetch(`/api/business-hours?id=${id}`, { method: "DELETE" });
-
-//     fetch(`/api/business-hours?companyId=${companyId}`)
-//       .then((res) => res.json())
-//       .then(setHours);
-//   };
-
-//   return (
-//     <div className="p-4 bg-gray-900 text-white">
-//       {days.map((day, index) => (
-//         <div key={index} className="mb-4">
-//           <div className="flex justify-between items-center mb-2">
-//             <span className="text-lg font-bold">{day}</span>
-//             <button
-//               onClick={() => handleAddPeriod(index)}
-//               className="bg-blue-500 px-2 py-1 text-white rounded"
-//             >
-//               + Adicionar período
-//             </button>
-//           </div>
-//           {hours
-//             .filter((h) => h.dayOfWeek === index)
-//             .map((h) => (
-//               <div key={h.id} className="flex gap-4 items-center bg-gray-800 p-2 rounded mb-2">
-//                 <span>{h.startTime} - {h.endTime}</span>
-//                 <button
-//                   onClick={() => handleDelete(h.id)}
-//                   className="bg-red-500 px-2 py-1 text-white rounded"
-//                 >
-//                   Remover
-//                 </button>
-//               </div>
-//             ))}
-//         </div>
-//       ))}
-//     </div>
-//   );
-// }

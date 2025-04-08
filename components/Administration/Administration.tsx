@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { ShieldEllipsis, User, Clock } from "lucide-react";
+import { ShieldEllipsis, User, Clock, CalendarDays } from "lucide-react";
 import BusinessHoursConfig from '@/components/BusinessHours/BusinessHours'; // Ajuste o caminho conforme necessário
+import AgendaModal from '@/components/Calendar/Calendar'; // Ajuste o caminho conforme necessário
 
 const FloatingAdministration = ({ companyId }: { companyId: number }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [statusLoja, setStatusLoja] = useState("Público");
   const [showBusinessHour, setShowBusinessHour] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const toggleStatus = () => {
     setStatusLoja((prev) => (prev === "Público" ? "Privado" : "Público"));
@@ -18,11 +20,19 @@ const FloatingAdministration = ({ companyId }: { companyId: number }) => {
           <div className="flex flex-col space-y-2 bg-white shadow-lg rounded-lg p-2 w-48">
             <button
               className="flex items-center gap-2 p-2 text-gray-700 hover:bg-gray-100 rounded"
+              onClick={() => setShowCalendar(true)}
+            >
+              <CalendarDays size={18} /> Agenda
+            </button>
+            <button
+              className="flex items-center gap-2 p-2 text-gray-700 hover:bg-gray-100 rounded"
               onClick={() => setShowBusinessHour(true)}
             >
               <Clock size={18} /> Horário comercial
             </button>
-            <button className="flex items-center gap-2 p-2 text-gray-700 hover:bg-gray-100 rounded">
+            <button 
+              className="flex items-center gap-2 p-2 text-gray-700 hover:bg-gray-100 rounded"
+            >
               <User size={18} /> Profissionais
             </button>
             <div
@@ -48,11 +58,15 @@ const FloatingAdministration = ({ companyId }: { companyId: number }) => {
 
       {showBusinessHour && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <BusinessHoursConfig
-              companyId={companyId}
-              setShowBusinessHour={setShowBusinessHour}  // Passando a função como prop
-            />
+          <BusinessHoursConfig
+            companyId={companyId}
+            setShowBusinessHour={setShowBusinessHour}
+          />
         </div>
+      )}
+
+      {showCalendar && (
+        <AgendaModal showCalendar={showCalendar} setShowCalendar={setShowCalendar} />
       )}
     </>
   );

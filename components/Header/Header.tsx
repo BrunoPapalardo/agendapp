@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Link from 'next/link';
 import { Calendar, User } from 'lucide-react';
 import UserMenu from '../UserMenu/UserMenu'; // Componente do menu do usuário
+import Image from "next/image";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,9 +16,16 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/home" className="flex items-center space-x-2">
-            <Calendar className="h-8 w-8 text-purple-600"/>
-            <span className="text-xl font-bold text-gray-900">Agendapp!</span>
+          <Link href="/home" className="flex items-center">
+            {/* <Calendar className="h-8 w-8 text-purple-600"/> */}
+            <Image
+              src='/img/logo.png'
+              alt='logo'
+              className="w-8 h-8 object-cover"
+              width={100}
+              height={100}
+            />
+            <span className="text-xl font-bold text-gray-900">enday</span>
           </Link>
 
           {/* Botão do usuário sempre visível */}

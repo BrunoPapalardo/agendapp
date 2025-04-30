@@ -80,12 +80,12 @@ export default function AgendaModal({ showCalendar, setShowCalendar }: AgendaMod
         {/* Cabeçalho do modal */}
         <div className="p-4 border-b flex justify-between items-center">
           <h2 className="text-2xl font-bold text-purple-600">Agenda</h2>
-          <button 
+          {/* <button 
             className="text-red-500 hover:text-red-700" 
             onClick={() => setShowCalendar(false)}
           >
             Fechar
-          </button>
+          </button> */}
         </div>
         {/* Conteúdo rolável com a agenda */}
         <div className="p-4 flex-1 overflow-y-auto">

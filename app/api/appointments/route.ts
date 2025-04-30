@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
@@ -66,6 +67,47 @@ export async function GET(req: NextRequest) {
     console.error("Erro na API:", error);
     return NextResponse.json(
       { error: "Erro interno do servidor" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+
+    // Validar campos obrigatórios
+    if (!body.dateTime || !body.userId || !body.employeeId || !body.companyId) {
+      return NextResponse.json(
+        { error: "Campos obrigatórios faltando: dateTime, userId, employeeId ou companyId" },
+        { status: 400 }
+      );
+    }
+
+    // Criar o agendamento
+    const newAppointment = await prisma.appointment.create({
+      data: {
+        dateTime: new Date(body.dateTime),
+        userId: parseInt(body.userId),
+        employeeId: parseInt(body.employeeId),
+        companyId: parseInt(body.companyId),
+        serviceId: body.serviceId ? parseInt(body.serviceId) : 0,
+        serviceDuration: body.serviceDuration ? parseInt(body.serviceDuration) : 0
+      },
+      include: {
+        user: true,
+        employee: true,
+        company: true,
+        service: true
+      }
+    });
+
+    return NextResponse.json(newAppointment, { status: 201 });
+
+  } catch (error) {
+    console.error("Erro ao criar agendamento:", error);
+    return NextResponse.json(
+      { error: "Erro interno do servidor ao criar agendamento" },
       { status: 500 }
     );
   }

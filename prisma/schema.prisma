@@ -94,11 +94,12 @@ model Service {
   id           Int        @id @default(autoincrement())
   name         String
   companyId    Int
-  image        String
+  image        String?
   price        Float
   duration     Int
   prepareTime  Int        @default(0)
   intervalTime Int        @default(0)
+  customFields Json?
   
   company      Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
   employees    Employee[] @relation("ServiceEmployees")

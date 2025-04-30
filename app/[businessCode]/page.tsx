@@ -8,7 +8,7 @@ import { MapPin, Clock, Instagram, Phone, MessageCircle, Map, AlertCircle, Arrow
 import Link from "next/link";
 import SubHeader from '@/components/SubHeader/SubHeader';
 import ErrorPage from '@/components/ErrorPage/ErrorPage';
-import NewProduct from '@/components/NewProduct/NewProduct';
+import NewService from '@/components/newService/NewService';
 import MainModal from '@/components/MainModal/MainModal';
 import Administration from '@/components/Administration/Administration';
 
@@ -262,7 +262,7 @@ function BusinessPage() {
           </div>
           <div className="mt-2 flex items-center space-x-2">
             <h2 className="text-2xl font-bold text-gray-900 mb-0">Serviços disponíveis</h2>
-            {isAdmin && <NewProduct />}
+            {isAdmin && <NewService />}
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {business.services.map((service) => (
